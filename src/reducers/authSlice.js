@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
 import { auth, provider } from '../firebase/firebase';
-import { addNewLinesDisp } from './consoleSlice';
 
 const initialState = {
   uid: '',
