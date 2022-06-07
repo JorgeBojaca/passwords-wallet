@@ -1,0 +1,263 @@
+.loader_console__container {
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  position: absolute;
+  z-index: 100;
+  caret-color: transparent;
+  font-size: 14.285714285714286vh;
+}
+
+.loader_console__loading_line {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  caret-color: transparent;
+}
+
+.loader_console__loading_line div {
+  position: relative;
+  width: 14.285714285714286vw;
+  height: 1em;
+  color: black;
+  text-align: center;
+  background-color: transparent;
+  color: transparent;
+  caret-color: transparent;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  animation-duration: 2.5s;
+}
+
+.loader_console__loading_line div.hide {
+  background-color: transparent;
+}
+
+.loader_console__loading_line div.loader1 {
+  animation-name: loader1;
+}
+
+.loader_console__loading_line div.loader2 {
+  animation-name: loader2;
+}
+
+.loader_console__loading_line div.loader3 {
+  animation-name: loader3;
+}
+
+.loader_console__loading_line div.loader4 {
+  animation-name: loader4;
+}
+
+.loader_console__loading_line div.loader5 {
+  animation-name: loader5;
+}
+
+.loader_console__loading_line div.loader6 {
+  animation-name: loader6;
+}
+
+.loader_console__loading_line div.loader7 {
+  animation-name: loader7;
+}
+
+.loader_console__loading_line div.loader8 {
+  animation-name: loader8;
+}
+
+.loader_console__loading_line div.loader9 {
+  animation-name: loader9;
+}
+
+.loader_console__loading_line div.loader10 {
+  animation-name: loader10;
+}
+
+.loader_console__loading_line div.loader11 {
+  animation-name: loader11;
+}
+
+.loader_console__loading_line div.loader12 {
+  animation-name: loader12;
+}
+
+.loader_console__loading_line div.loader13 {
+  animation-name: loader13;
+}
+
+.loader_console__loading_line div.loader14 {
+  animation-name: loader14;
+}
+
+@keyframes loader1 {
+  0% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  7.142857% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader2 {
+  7.142857% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  14.28571% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader3 {
+  14.28571% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  21.42857% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader4 {
+  21.42857% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  28.57142% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader5 {
+  28.57142% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  35.71428% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader6 {
+  35.71428% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  42.85714% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader7 {
+  42.85714% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  50% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader8 {
+  50% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  57.14285% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader9 {
+  57.14285% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  64.28571% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader10 {
+  64.28571% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  71.42857% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader11 {
+  71.42857% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  78.57142% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader12 {
+  78.57142% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  85.71428% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader13 {
+  85.71428% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  92.85714% {
+    background: #000;
+    color: white;
+  }
+}
+
+@keyframes loader14 {
+  92.85714% {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  99.99999% {
+    background: #000;
+    color: white;
+  }
+}
