@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.1d45afbe.css",
-    "main.js": "/static/js/main.13b6a923.js",
-    "index.html": "/index.html",
-    "main.1d45afbe.css.map": "/static/css/main.1d45afbe.css.map",
-    "main.13b6a923.js.map": "/static/js/main.13b6a923.js.map"
+    "main.css": "/passwords-wallet/static/css/main.1d45afbe.css",
+    "main.js": "/passwords-wallet/static/js/main.a01e2677.js",
+    "index.html": "/passwords-wallet/index.html",
+    "main.1d45afbe.css.map": "/passwords-wallet/static/css/main.1d45afbe.css.map",
+    "main.a01e2677.js.map": "/passwords-wallet/static/js/main.a01e2677.js.map"
   },
   "entrypoints": [
     "static/css/main.1d45afbe.css",
-    "static/js/main.13b6a923.js"
+    "static/js/main.a01e2677.js"
   ]
 }
