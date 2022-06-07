@@ -19,7 +19,7 @@ function Wallet() {
     state.ui.backgroundColor,
   ]);
   const [resetBy, setResetBy] = useState(-1);
-  const [showAdd, setShowAdd] = useState(false);
+  const [showAdd, setShowAdd] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,10 +28,10 @@ function Wallet() {
   }, [dispatch, uid]);
 
   useEffect(() => {
-    if (apps.length === 0) {
-      setShowAdd(true);
+    if (apps.length > 0 && showAdd === null) {
+      setShowAdd(-1);
     }
-  }, [apps.length]);
+  }, [apps.length, showAdd]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ function Wallet() {
     dispatch(saveApp({ name: inputName, value: cipher.toString() }));
     setInputName('');
     setInputCipher('');
-    setShowAdd(false);
+    setShowAdd(0);
   };
   const handleClick = (e, idx) => {
     e.stopPropagation();
@@ -76,10 +76,10 @@ function Wallet() {
               title={showAdd ? 'Esconder form' : 'Nueva contraseña'}
               className="wallet-btn inline"
               onClick={() => {
-                setShowAdd((s) => !s);
+                setShowAdd((s) => (s <= 0 ? 1 : 0));
               }}
             >
-              {showAdd ? '^' : '+'}
+              {showAdd <= 0 ? '+' : '^'}
             </button>
           )}
         </div>
@@ -100,7 +100,7 @@ function Wallet() {
             puede recuperar**
           </span>
         )}
-        {showAdd && (
+        {showAdd === 1 && (
           <div
             className="wallet-form_container"
             style={{ position: 'relative' }}
@@ -147,9 +147,11 @@ function Wallet() {
         {apps.length > 0 && (
           <div
             className={
-              showAdd
+              showAdd === 0
+                ? 'wallet-app_container_form_hidden'
+                : showAdd === 1
                 ? 'wallet-app_container_form_showed'
-                : 'wallet-app_container_form_hidden'
+                : ''
             }
           >
             <h3 style={{ display: 'inline-block' }}>Contraseñas Guardadas</h3>
