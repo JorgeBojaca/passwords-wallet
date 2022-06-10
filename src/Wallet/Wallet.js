@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import aes from 'crypto-js/aes';
+
 import { fetchApps, saveApp } from '../reducers/walletSlice';
 import { logoutFirebase } from '../reducers/authSlice';
-
-// import PassApp from './PassApp';
-import './Wallet.css';
 import PassApp from './PassApp';
+import './Wallet.css';
 
-function Wallet() {
+const Wallet = () => {
   const [inputCipher, setInputCipher] = useState('');
   const [inputName, setInputName] = useState('');
   const [showInfo, setShowInfo] = useState(false);
@@ -30,6 +29,8 @@ function Wallet() {
   useEffect(() => {
     if (apps.length > 0 && showAdd === null) {
       setShowAdd(-1);
+    } else if (apps.length === 0 && showAdd === null) {
+      setShowAdd(1);
     }
   }, [apps.length, showAdd]);
 
@@ -71,7 +72,7 @@ function Wallet() {
       <main style={{ backgroundColor }} className="wallet-main">
         <div>
           <h1 className="inline">Passwords Wallet</h1>
-          {apps.length > 0 && (
+          {
             <button
               title={showAdd ? 'Esconder form' : 'Nueva contraseña'}
               className="wallet-btn inline"
@@ -81,7 +82,7 @@ function Wallet() {
             >
               {showAdd <= 0 ? '+' : '^'}
             </button>
-          )}
+          }
         </div>
         <button
           tittle="Cerrar sesión"
@@ -187,6 +188,6 @@ function Wallet() {
       </main>
     </div>
   );
-}
+};
 
 export default Wallet;
