@@ -27,10 +27,12 @@ const Wallet = () => {
   }, [dispatch, uid]);
 
   useEffect(() => {
-    if (apps.length > 0 && showAdd === null) {
-      setShowAdd(-1);
-    } else if (apps.length === 0 && showAdd === null) {
-      setShowAdd(1);
+    if (showAdd === null) {
+      if (apps.length > 0) {
+        setShowAdd(-1);
+      } else {
+        setShowAdd(1);
+      }
     }
   }, [apps.length, showAdd]);
 
