@@ -5,7 +5,7 @@ import { logoutFirebase } from './authSlice';
 import { hideLoader, showLoader } from './uiSlice';
 
 const initialState = {
-  apps: [],
+  apps: null,
 };
 
 export const fetchApps = createAsyncThunk(
@@ -71,7 +71,11 @@ export const removeApp = createAsyncThunk(
 const walletSlice = createSlice({
   name: 'wallet',
   initialState,
-  reducers: {},
+  reducers: {
+    resetApps: (state) => {
+      state.apps = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchApps.fulfilled, (state, action) => {
       state.apps = action.payload;
@@ -94,5 +98,5 @@ const walletSlice = createSlice({
   },
 });
 
-export const { setApps } = walletSlice.actions;
+export const { setApps, resetApps } = walletSlice.actions;
 export default walletSlice.reducer;
