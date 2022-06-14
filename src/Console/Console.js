@@ -26,6 +26,10 @@ export const Console = ({
   const ref = useRef();
   const refContainer = useRef();
   const [content, setContent] = useState([]);
+  const [content2, setContent2] = useState('');
+  const [positionXInp, setPositionXInp] = useState('0px');
+
+  const [refPosition, setRefPosition] = useState();
 
   const dispatch = useDispatch();
 
@@ -88,6 +92,8 @@ export const Console = ({
     }));
 
     setContent([]);
+    setContent2('');
+    updatePosition(true);
 
     if (contExec) {
       continueExec();
@@ -104,10 +110,13 @@ export const Console = ({
       const lineFound =
         linesHistory[linesHistory.length + focus.lineHistoryPosition];
       setContent(lineFound.content);
+      setContent2(lineFound.content.join(''));
       setFocus((f) => ({ ...f, position: lineFound.content.length }));
     } else {
       setContent([]);
+      setContent2('');
       setFocus((f) => ({ ...f, position: 0 }));
+      updatePosition(true);
     }
   }, [focus.lineHistoryPosition, lines]);
 
@@ -123,29 +132,37 @@ export const Console = ({
   }, [lines]);
 
   const handleInput = ({ target }) => {
-    if (!isExecuting) return;
-    let val = target.value;
-    if (val.length > 1) {
-      return;
+    if (isExecuting) {
+      if (target.value.length >= 0) {
+        let value = [...target.value.split('')];
+        let val = value.pop() || '';
+        val = val === '—' ? '--' : val; //Ajuste para Safari ios
+        value = [...value, val];
+
+        if (content2.length < target.value.length) {
+          setFocus((f) => ({ ...f, position: f.position + 1 }));
+        }
+        setContent(value);
+        setContent2(value.join(''));
+        updatePosition();
+      }
     }
-    if (val === '—') {
-      //Ajuste para Safari ios
-      val = '-';
+  };
+  const updatePosition = (reset) => {
+    if (reset) {
+      setPositionXInp('0px');
     }
-    const auxContent = [...content];
-    auxContent.splice(focus.position + 1, 0, val);
-    setFocus((f) => ({ ...f, position: f.position + 1 }));
-    setContent(auxContent);
+    if (refPosition?.current) {
+      setPositionXInp(refPosition.current.getBoundingClientRect().x + 'px');
+    }
   };
 
   const handleSpecialKeyDown = ({ key }) => {
     if (!isExecuting) return;
     if (key === 'Backspace') {
       if (content.length > 0 && focus.position > 0) {
-        const auxContent = [...content];
-        auxContent.splice(focus.position - 1, 1);
-        setContent(auxContent);
         setFocus((f) => ({ ...f, position: f.position - 1 }));
+        updatePosition();
       }
     } else if (key === 'ArrowLeft') {
       if (focus.position > 0) {
@@ -173,15 +190,10 @@ export const Console = ({
           lineHistoryPosition: f.lineHistoryPosition - 1,
         }));
       }
-    } else if (key === 'Delete') {
-      if (content.length > 0 && focus.position < content.length - 1) {
-        const auxContent = [...content];
-        auxContent.splice(focus.position + 1, 1);
-        setContent(auxContent);
-      }
     } else if (key === 'Enter') {
       const isCommand = evalLine({ content });
       if (!isCommand) {
+        updatePosition(true);
         dispatch(
           addNewLinesDisp({
             config: {
@@ -192,6 +204,11 @@ export const Console = ({
             },
           })
         );
+        setFocus((f) => ({
+          ...f,
+          position: 0,
+          lineHistoryPosition: 0,
+        }));
       } else {
         stopExec();
       }
@@ -224,6 +241,7 @@ export const Console = ({
               type={caretType}
               blink={caretBlinking}
               show={isExecuting}
+              setRefPosition={setRefPosition}
             />
           ) : (
             <>
@@ -248,6 +266,7 @@ export const Console = ({
                   type={caretType}
                   blink={caretBlinking}
                   show={isExecuting}
+                  setRefPosition={setRefPosition}
                 />
               )}
             </>
@@ -257,19 +276,24 @@ export const Console = ({
           className="login__hidden_input"
           type="text"
           ref={ref}
-          onChange={(e) => {
-            handleInput(e);
-          }}
+          onChange={handleInput}
           onBlur={stopExec}
           onKeyDown={handleSpecialKeyDown}
-          value={''}
+          value={content2}
+          style={{ left: positionXInp }}
         />
       </div>
     </div>
   );
 };
 
-const CustomCaret = ({ type, blink, show }) => {
+const CustomCaret = ({ type, blink, show, setRefPosition }) => {
+  const ref = useRef();
+  useEffect(() => {
+    if (ref) {
+      setRefPosition(ref);
+    }
+  }, [ref, setRefPosition]);
   const getClasses = () => {
     let className = 'login__custom_caret';
     switch (type) {
@@ -286,13 +310,16 @@ const CustomCaret = ({ type, blink, show }) => {
   };
   return (
     <>
-      {show && <span className={getClasses()}>{type === 'line' && '|'}</span>}
+      {show && (
+        <span ref={ref} className={getClasses()}>
+          {type === 'line' && '|'}
+        </span>
+      )}
     </>
   );
 };
 
 Console.propTypes = {
-  // setLines: PropTypes.func.isRequired,
   setIsExecuting: PropTypes.func.isRequired,
   isExecuting: PropTypes.bool.isRequired,
   evalLine: PropTypes.func.isRequired,

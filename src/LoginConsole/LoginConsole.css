@@ -1,6 +1,6 @@
-.login__container{
+.login__container {
     /* background-color: black; */
-  background-color: #282c34;
+    background-color: #282c34;
 
     caret-color: transparent;
     position: absolute;
@@ -11,18 +11,24 @@
     overflow-x: hidden;
     overflow-wrap: break-word;
 }
+
 .login__container::-webkit-scrollbar {
     width: 5px;
-  }
-  .login__container::-webkit-scrollbar-track {
-    background: black; /* color of the tracking area */
-  }
-  .login__container::-webkit-scrollbar-thumb {
-    background-color: grey; /* color of the scroll thumb */
+}
 
-    border-radius: 20px; /* roundness of the scroll thumb */
+.login__container::-webkit-scrollbar-track {
+    background: black;
+    /* color of the tracking area */
+}
+
+.login__container::-webkit-scrollbar-thumb {
+    background-color: grey;
+    /* color of the scroll thumb */
+
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
     /*border: 2px solid black; /* creates padding around scroll thumb */
-  }
+}
 
 .login__custom_textarea {
     position: relative;
@@ -31,11 +37,13 @@
     margin: 10px 0;
     outline: none;
 }
-.login__content_line{
+
+.login__content_line {
     position: relative;
     margin: 10px 0;
 }
-.login__content_line_char{
+
+.login__content_line_char {
     /* background: purple; */
     display: inline-block;
     text-align: center;
@@ -43,15 +51,17 @@
     width: 0.625rem;
     /* width: 1rem; */
 }
-.login__content_line_char.focus{
+
+.login__content_line_char.focus {
     /* position: absolute; */
-     background-color: white;
-    right:-0.5rem;
+    background-color: white;
+    right: -0.5rem;
     color: black;
     /* height:1.315rem; */
-    top:-2px; 
+    top: -2px;
 }
-.login__content_line_char.focus.blinking{
+
+.login__content_line_char.focus.blinking {
     background-color: white;
     color: black;
     animation: blinkingAnimation 0.9s linear infinite;
@@ -65,68 +75,82 @@
     background-color: white;
     font-weight: bolder;
 }
-.caret_type_line{
+
+.caret_type_line {
     font-size: 1rem;
     background-color: transparent;
 }
-.caret_type_box{
+
+.caret_type_box {
     position: absolute;
     display: inline-block;
     width: 0.625rem;
-    height:1.2rem
+    height: 1.2rem
 }
-.caret_type_box.caret_blinking{
+
+.caret_type_box.caret_blinking {
     animation: boxBlinkingAnimation 0.9s linear infinite;
 }
-.caret_type_line.caret_blinking{
+
+.caret_type_line.caret_blinking {
     animation: lineBlinkingAnimation 0.9s linear infinite;
 }
 
-input.login__hidden_input{
-    width: 100vw;
+input.login__hidden_input {
+    position: relative;
+    width: 1rem;
     border: none;
     outline: none;
-    padding: 0; 
+    padding: 0;
     background: transparent;
+    color: transparent;
+    z-index: -1;
 }
 
-@keyframes boxBlinkingAnimation{
-    0%{
+@keyframes boxBlinkingAnimation {
+    0% {
         /* opacity: 1; */
         background-color: white;
-        color:transparent
+        color: transparent
     }
-    49%{
+
+    49% {
         background-color: white;
-        color:transparent
-        /* opacity: 1; */
+        color: transparent
+            /* opacity: 1; */
     }
-    51%{
+
+    51% {
         background-color: transparent;
-        color:white
-        /* opacity: 0; */
+        color: white
+            /* opacity: 0; */
     }
-    100%{
+
+    100% {
         background-color: transparent;
-        color:white
-        /* opacity: 0; */
+        color: white
+            /* opacity: 0; */
     }
 }
-@keyframes lineBlinkingAnimation{
-    0%{
+
+@keyframes lineBlinkingAnimation {
+    0% {
         /* opacity: 1; */
-        color:transparent
+        color: transparent
     }
-    49%{
-        color:transparent
-        /* opacity: 1; */
+
+    49% {
+        color: transparent
+            /* opacity: 1; */
     }
-    51%{
-        color:white
-        /* opacity: 0; */
+
+    51% {
+        color: white
+            /* opacity: 0; */
     }
-    100%{
-        color:white
-        /* opacity: 0; */
+
+    100% {
+        color: white
+            /* opacity: 0; */
     }
 }
