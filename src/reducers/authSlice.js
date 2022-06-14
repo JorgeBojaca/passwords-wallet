@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
 import { auth, provider } from '../firebase/firebase';
+import { resetApps } from './walletSlice';
 
 const initialState = {
   uid: '',
@@ -33,7 +34,8 @@ export const loginWithGoogle = createAsyncThunk(
 
 export const logoutFirebase = createAsyncThunk(
   'auth/logoutFirebase',
-  async (payload) => {
+  async (payload, thunkAPI) => {
+    thunkAPI.dispatch(resetApps());
     await signOut(auth);
     return payload;
   }
@@ -87,6 +89,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { authMsgError } = authSlice.actions;
+// export const {  } = authSlice.actions;
 
 export default authSlice.reducer;
