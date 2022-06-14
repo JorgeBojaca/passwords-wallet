@@ -28,13 +28,15 @@ const Wallet = () => {
 
   useEffect(() => {
     if (showAdd === null) {
-      if (apps.length > 0) {
-        setShowAdd(-1);
-      } else {
-        setShowAdd(1);
+      if (apps !== null) {
+        if (apps?.length === 0) {
+          setShowAdd(2);
+        } else {
+          setShowAdd(0);
+        }
       }
     }
-  }, [apps.length, showAdd]);
+  }, [apps, showAdd]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,17 +76,17 @@ const Wallet = () => {
       <main style={{ backgroundColor }} className="wallet-main">
         <div>
           <h1 className="inline">Passwords Wallet</h1>
-          {
+          {apps?.length > 0 && (
             <button
               title={showAdd ? 'Esconder form' : 'Nueva contraseña'}
               className="wallet-btn inline"
               onClick={() => {
-                setShowAdd((s) => (s <= 0 ? 1 : 0));
+                setShowAdd((s) => (s === 1 ? 0 : 1));
               }}
             >
-              {showAdd <= 0 ? '+' : '^'}
+              {showAdd > 0 ? '^' : '+'}
             </button>
-          }
+          )}
         </div>
         <button
           tittle="Cerrar sesión"
@@ -103,7 +105,7 @@ const Wallet = () => {
             puede recuperar**
           </span>
         )}
-        {showAdd === 1 && (
+        {showAdd > 0 && (
           <div
             className="wallet-form_container"
             style={{ position: 'relative' }}
@@ -147,7 +149,7 @@ const Wallet = () => {
             </form>
           </div>
         )}
-        {apps.length > 0 && (
+        {apps?.length > 0 && (
           <div
             className={
               showAdd === 0
@@ -170,7 +172,7 @@ const Wallet = () => {
               -
             </button>
             <div className="wallet-app_container">
-              {apps.map((app, idx) => (
+              {apps?.map((app, idx) => (
                 <PassApp
                   key={app.name}
                   app={app}
