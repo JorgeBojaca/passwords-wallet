@@ -43,59 +43,56 @@ export const LoginConsole = () => {
   useEffect(() => {
     if (currentCommand.command.length > 0) {
       setIsExecuting(false);
-      execCommand(currentCommand);
-    }
-  }, [currentCommand]);
+      const { command, arg } = currentCommand;
+      const type = command.join(' ');
+      switch (type) {
+        case 'passw login --google':
+          dispatch(loginWithGoogle());
+          break;
+        case 'passw login --email':
+          if (arg) {
+            setCommandResult({
+              msg: '¡Email agragado correctamente!',
+              block: false,
+            });
+          } else {
+            setCommandResult({
+              msg: 'Escribe un correo válido después de --email ',
+              block: false,
+            });
+          }
 
-  const execCommand = ({ command, arg }) => {
-    const type = command.join(' ');
-    switch (type) {
-      case 'passw login --google':
-        dispatch(loginWithGoogle());
-        break;
-      case 'passw login --email':
-        if (arg) {
+          break;
+        case 'passw login --password':
           setCommandResult({
-            msg: '¡Email agragado correctamente!',
+            msg: '¡Ingrese su contraseña!',
             block: false,
           });
-        } else {
+          break;
+        case 'passw logout':
+          dispatch(logoutFirebase());
           setCommandResult({
-            msg: 'Escribe un correo válido después de --email ',
             block: false,
           });
-        }
+          break;
 
-        break;
-      case 'passw login --password':
-        setCommandResult({
-          msg: '¡Ingrese su contraseña!',
-          block: false,
-        });
-        break;
-      case 'passw logout':
-        dispatch(logoutFirebase());
-        setCommandResult({
-          block: false,
-        });
-        break;
+        case 'clear':
+          dispatch(clearConsole());
+          setCommandResult({
+            block: false,
+            option: 'HIDE_CURRENT',
+          });
+          break;
 
-      case 'clear':
-        dispatch(clearConsole());
-        setCommandResult({
-          block: false,
-          option: 'HIDE_CURRENT',
-        });
-        break;
+        default:
+          setCommandResult({
+            block: false,
+          });
 
-      default:
-        setCommandResult({
-          block: false,
-        });
-
-        break;
+          break;
+      }
     }
-  };
+  }, [currentCommand, dispatch]);
 
   return (
     <>

@@ -22,31 +22,29 @@ export const Console = ({
       return [{ content: [...c.split('')] }];
     }, []);
   }, [intro]);
+
   const [preLineTxt, setPreLineTxt] = useState(preLine);
-  const ref = useRef();
   const refContainer = useRef();
   const [content, setContent] = useState([]);
   const [content2, setContent2] = useState('');
   const [positionXInp, setPositionXInp] = useState('0px');
-
-  const [refPosition, setRefPosition] = useState();
-
-  const dispatch = useDispatch();
-
   const [focus, setFocus] = useState({
     position: 0,
     isFocused: false,
     lineHistoryPosition: 0,
   });
-  const backgroundColor = useSelector(({ ui }) => ui.backgroundColor);
   const [caretBlinking] = useState(true);
+
+  const backgroundColor = useSelector(({ ui }) => ui.backgroundColor);
   const caretType = 'box';
+
+  const ref = useRef();
+  const [refPosition, setRefPosition] = useState();
+
+  const dispatch = useDispatch();
 
   const stopExec = () => {
     setIsExecuting(false);
-  };
-  const continueExec = () => {
-    setIsExecuting(true);
   };
 
   useEffect(() => {
@@ -57,52 +55,58 @@ export const Console = ({
 
   const toContent = (val) => ({ content: val?.split('') });
 
+  const pvCommandResult = useRef(commandResult);
   useEffect(() => {
-    let contExec = true;
-    let payload;
-    if (commandResult.msg) {
-      const newMsgs = commandResult.msg
-        .split('\n')
-        .map((msg) => toContent(msg));
-      contExec = !commandResult.block;
-      payload = {
-        config: {
-          current: content.length > 0 ? content : null,
-          preLineTxt,
-          isHidden: commandResult.option === 'HIDE_CURRENT',
-        },
-        newLines: [...newMsgs],
-      };
-    } else if (commandResult.block === false) {
-      contExec = true;
-      payload = {
-        config: {
-          current: content.length > 0 ? content : null,
-          preLineTxt,
-          isHidden: commandResult.option === 'HIDE_CURRENT',
-        },
-      };
-    }
-    if (payload) {
-      dispatch(addNewLinesDisp(payload));
-    }
-    setFocus((f) => ({
-      ...f,
-      lineHistoryPosition: 0,
-    }));
+    if (commandResult && pvCommandResult.current !== commandResult) {
+      let contExec = true;
+      let payload;
+      if (commandResult.msg) {
+        const newMsgs = commandResult.msg
+          .split('\n')
+          .map((msg) => toContent(msg));
+        contExec = !commandResult.block;
+        payload = {
+          config: {
+            current: content.length > 0 ? content : null,
+            preLineTxt,
+            isHidden: commandResult.option === 'HIDE_CURRENT',
+          },
+          newLines: [...newMsgs],
+        };
+      } else if (commandResult.block === false) {
+        contExec = true;
+        payload = {
+          config: {
+            current: content.length > 0 ? content : null,
+            preLineTxt,
+            isHidden: commandResult.option === 'HIDE_CURRENT',
+          },
+        };
+      }
+      if (payload) {
+        dispatch(addNewLinesDisp(payload));
+      }
+      setFocus((f) => ({
+        ...f,
+        lineHistoryPosition: 0,
+      }));
 
-    setContent([]);
-    setContent2('');
-    updatePosition(true);
+      setContent([]);
+      setContent2('');
+      setPositionXInp('0px');
 
-    if (contExec) {
-      continueExec();
-      setPreLineTxt(preLine);
-    } else {
-      setPreLineTxt('');
+      if (contExec) {
+        setIsExecuting(true);
+        setPreLineTxt(preLine);
+      } else {
+        setPreLineTxt('');
+      }
     }
-    // eslint-disable-next-line
-  }, [commandResult]);
+    return () => {
+      pvCommandResult.current = commandResult;
+    };
+    // }, [commandResult]);
+  }, [commandResult, content, dispatch, preLine, preLineTxt, setIsExecuting]);
 
   useEffect(() => {
     if (focus.lineHistoryPosition !== 0) {
@@ -116,17 +120,18 @@ export const Console = ({
       setContent([]);
       setContent2('');
       setFocus((f) => ({ ...f, position: 0 }));
-      updatePosition(true);
+      setPositionXInp('0px');
     }
   }, [focus.lineHistoryPosition, lines]);
 
   useEffect(() => {
     if (!focus.isFocused) {
-      continueExec();
+      setIsExecuting(true);
       ref.current?.focus();
       setFocus((f) => ({ ...f, isFocused: true }));
     }
-  }, [focus.isFocused]);
+  }, [focus.isFocused, setIsExecuting]);
+
   useLayoutEffect(() => {
     refContainer.current.scrollTop = refContainer.current.scrollHeight;
   }, [lines]);
