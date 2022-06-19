@@ -140,9 +140,9 @@
   background-color: white;
   border: 2px solid white;
   color: black;
-  padding: 0.5rem;
+  padding: 0.6rem;
   caret-color: transparent;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
@@ -155,6 +155,7 @@
   caret-color: black;
   text-align: center;
   width: 100%;
+  font-size: 1rem;
 }
 
 .wallet-app_inp {
