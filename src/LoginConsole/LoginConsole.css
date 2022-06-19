@@ -1,11 +1,10 @@
 .login__container {
-    /* background-color: black; */
     background-color: #282c34;
-
     caret-color: transparent;
     position: absolute;
     width: 100vw;
     height: 100vh;
+    font-size: 1.2rem;
     color: white;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -47,15 +46,14 @@
     /* background: purple; */
     display: inline-block;
     text-align: center;
-    line-height: 1.2rem;
-    width: 0.625rem;
-    /* width: 1rem; */
+    line-height: 1.2em;
+    /* width: 0.625em; */
 }
 
 .login__content_line_char.focus {
     /* position: absolute; */
     background-color: white;
-    right: -0.5rem;
+    right: -0.5em;
     color: black;
     /* height:1.315rem; */
     top: -2px;
@@ -77,15 +75,15 @@
 }
 
 .caret_type_line {
-    font-size: 1rem;
+    font-size: 1em;
     background-color: transparent;
 }
 
 .caret_type_box {
     position: absolute;
     display: inline-block;
-    width: 0.625rem;
-    height: 1.2rem
+    width: 0.625em;
+    height: 1.2em
 }
 
 .caret_type_box.caret_blinking {
@@ -98,7 +96,7 @@
 
 input.login__hidden_input {
     position: relative;
-    width: 1rem;
+    width: 1em;
     border: none;
     outline: none;
     padding: 0;
