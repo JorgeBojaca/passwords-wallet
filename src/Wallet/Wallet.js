@@ -74,15 +74,16 @@ const Wallet = () => {
       }}
     >
       <main style={{ backgroundColor }} className="wallet-main">
-        <div>
+        <div
+          onClick={() => {
+            setShowAdd((s) => (s === 1 ? 0 : 1));
+          }}
+        >
           <h1 className="inline">Passwords Wallet</h1>
           {apps?.length > 0 && (
             <button
               title={showAdd ? 'Esconder form' : 'Nueva contraseña'}
               className="wallet-btn inline"
-              onClick={() => {
-                setShowAdd((s) => (s === 1 ? 0 : 1));
-              }}
             >
               {showAdd > 0 ? '^' : '+'}
             </button>
