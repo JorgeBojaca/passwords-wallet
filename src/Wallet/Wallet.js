@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import aes from 'crypto-js/aes';
 
@@ -17,6 +17,7 @@ const Wallet = () => {
     state.wallet.apps,
     state.ui.backgroundColor,
   ]);
+  const [filter, setFilter] = useState('');
   const [resetBy, setResetBy] = useState(-1);
   const [showAdd, setShowAdd] = useState(null);
   const dispatch = useDispatch();
@@ -37,6 +38,13 @@ const Wallet = () => {
       }
     }
   }, [apps, showAdd]);
+
+  const filteredApps = useCallback(() => {
+    return apps.filter((app) => {
+      const appName = app.name.toLowerCase();
+      return appName.indexOf(filter.toLowerCase()) >= 0;
+    });
+  }, [filter, apps]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -172,8 +180,18 @@ const Wallet = () => {
             >
               -
             </button>
+            <div style={{ marginBottom: '10px' }}>
+              <label style={{ marginRight: '10px' }}>Buscar</label>
+              <input
+                className="wallet-input"
+                value={filter}
+                onChange={({ target }) => {
+                  setFilter(target.value);
+                }}
+              ></input>
+            </div>
             <div className="wallet-app_container">
-              {apps?.map((app, idx) => (
+              {filteredApps()?.map((app, idx) => (
                 <PassApp
                   key={app.name}
                   app={app}
