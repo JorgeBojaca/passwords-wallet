@@ -9,8 +9,6 @@
   caret-color: transparent;
 }
 
-
-
 .wallet-main {
   background-color: #282c34;
   height: 100%;
@@ -31,7 +29,6 @@
   width: 100%;
   padding: 0px 10px;
   overflow: hidden;
-
 }
 
 .wallet-input {
@@ -95,27 +92,22 @@
 }
 
 .wallet-app_container {
-  width: 90vw;
+  width: 100vw;
   height: 100%;
+  padding: 0 10px;
   display: grid;
   gap: 10px;
-  padding: 0 10px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .wallet-app_container_form_showed {
   animation: moveDownContent ease-out 1s 1;
 }
 
-
-
 .wallet-app_container_form_hidden {
   animation: moveUpContent ease-out 1s 1;
-
 }
-
-
-
 
 .wallet-app_container::-webkit-scrollbar {
   width: 5px;
@@ -140,26 +132,45 @@
   background-color: white;
   border: 2px solid white;
   color: black;
-  padding: 0.6rem;
   caret-color: transparent;
   font-size: 1.2rem;
   cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 8px;
+  text-align: center;
 }
 
-
 .wallet-app-input {
-  position: relative;
+  position: absolute;
   background-color: white;
+  top: 0;
+  left: 0;
   border: none;
   outline: none;
   caret-color: black;
   text-align: center;
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  padding: 0.6rem;
+  border-radius: 8px;
+  z-index: 100;
+}
+.wallet-app__background-input-act {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  background-color: black;
+  opacity: 0.8;
+  z-index: 10;
+  cursor: auto;
+  animation: bkgOpacity ease 0.6s 1;
 }
 
 .wallet-app_inp {
   animation: zoom ease-in-out 0.1s 1;
+  margin-bottom: 20px;
 }
 
 .wallet-app.wallet-app_opacity {
@@ -223,7 +234,6 @@
   border-left: 4px solid;
   transform: rotatez(-45deg);
   animation: enterCheck 0.5s 1;
-
 }
 
 @keyframes enterCheck {
@@ -235,15 +245,15 @@
 
 @keyframes deletingAnimation {
   0% {
-    transform: translateX(5px)
+    transform: translateX(5px);
   }
 
   50% {
-    transform: translateX(-5px)
+    transform: translateX(-5px);
   }
 
   0% {
-    transform: translateX(0px)
+    transform: translateX(0px);
   }
 }
 
@@ -283,7 +293,6 @@
     transform: rotate3d(0, 0, 0, 0deg);
     color: white;
     background-color: black;
-
   }
 }
 
@@ -324,5 +333,13 @@
     opacity: 0.9;
     transform-origin: 1000% 0%;
     transform: rotate(-1deg);
+  }
+}
+@keyframes bkgOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.8;
   }
 }
