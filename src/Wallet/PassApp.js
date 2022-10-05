@@ -60,7 +60,6 @@ const PassApp = ({
     const objCipher = JSON.parse(cipher);
     return objCipher.val;
   };
-
   return (
     <>
       <div
@@ -75,8 +74,6 @@ const PassApp = ({
             : opt === 3
             ? 'wallet-app_hide_pass'
             : ''
-        } ${resetBy !== idx && resetBy !== -1 ? 'wallet-app_opacity' : ''} ${
-          showDelete ? 'wallet-app_deleting' : ''
         }`}
         onClick={handleClick}
       >
@@ -99,16 +96,26 @@ const PassApp = ({
         )}
 
         {opt === 1 ? (
-          <form onSubmit={handleSubmit}>
-            <input
-              ref={ref}
-              placeholder="Escriba su KEY..."
-              className="wallet-app-input"
-              onChange={(e) =>
-                setKey(() => (e.target.value ? e.target.value : ''))
-              }
-            ></input>
-          </form>
+          <>
+            <form onSubmit={handleSubmit}>
+              <input
+                ref={ref}
+                placeholder="Escriba su KEY..."
+                className="wallet-app-input"
+                style={{ zIndex: '150' }}
+                onChange={(e) =>
+                  setKey(() => (e.target.value ? e.target.value : ''))
+                }
+              ></input>
+            </form>
+            <div
+              className="wallet-app__background-input-act"
+              onClick={() => {
+                setOpt(0);
+                setResetBy(-1);
+              }}
+            ></div>
+          </>
         ) : opt === 2 ? (
           <>
             <strong>{getPass()}</strong>
